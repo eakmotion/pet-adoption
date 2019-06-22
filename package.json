@@ -9,10 +9,16 @@
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [ "React" ],
+  "keywords": [
+    "React"
+  ],
   "author": "eakmotion",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.0.0",
     "eslint-config-prettier": "^5.0.0",
