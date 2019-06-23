@@ -53,7 +53,11 @@ const SearchParams = () => {
         <AnimalDropdown />
         <BreedDropdown />
         <ThemeContext.Consumer>
-          {([ theme ]) => <button style={{ backgroundColor: theme }}>Submit</button>}
+          {([ theme ]) => (
+            <button style={{ backgroundColor: theme.buttonColor, borderColor: theme.borderColor }}>
+              Submit
+            </button>
+          )}
         </ThemeContext.Consumer>
       </form>
       <Results pets={pets} />

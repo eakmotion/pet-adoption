@@ -6,7 +6,10 @@ import Details from './Details';
 import ThemeContext from './ThemeContext';
 
 const App = () => {
-  const theme = useState('yellow');
+  const theme = useState({
+    buttonColor : 'yellow',
+    borderColor : 'blue'
+  });
   return (
     <ThemeContext.Provider value={theme}>
       <div>
