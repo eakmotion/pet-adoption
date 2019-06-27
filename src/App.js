@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from '@reach/router';
 import SearchParams from './SearchParams';
@@ -18,10 +18,12 @@ const App = () => {
             <h1>Pet Adoption</h1>
           </Link>
         </header>
-        <Router>
-          <SearchParams path='/' />
-          <Details path='/details/:id' />
-        </Router>
+        <Suspense fallback={<h1>loading route ...</h1>}>
+          <Router>
+            <SearchParams path='/' />
+            <Details path='/details/:id' />
+          </Router>
+        </Suspense>
       </div>
     </ThemeContext.Provider>
   );
