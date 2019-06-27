@@ -1,9 +1,10 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from '@reach/router';
 import SearchParams from './SearchParams';
-import Details from './Details';
 import ThemeContext from './ThemeContext';
+
+const Details = lazy(() => import('./Details'));
 
 const App = () => {
   const theme = useState({
