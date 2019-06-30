@@ -7,10 +7,7 @@ import ThemeContext from './ThemeContext';
 const Details = lazy(() => import('./Details'));
 
 const App = () => {
-  const theme = useState({
-    buttonColor : 'yellow',
-    borderColor : 'blue'
-  });
+  const theme = useState('yellow');
   return (
     <ThemeContext.Provider value={theme}>
       <div>

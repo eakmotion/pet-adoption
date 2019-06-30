@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link } from '@reach/router';
+import { Photo } from '@frontendmasters/pet';
 
-const Pet = (props) => {
+interface IProps {
+  name: string;
+  animal: string;
+  breed: string;
+  media: Photo[];
+  location: string;
+  id: number;
+}
+
+const Pet: FunctionComponent<IProps> = (props) => {
   const { name, animal, breed, media, location, id } = props;
 
   let hero = 'http://placecorgi.com/300/300';
@@ -14,9 +24,9 @@ const Pet = (props) => {
       to={`/details/${id}`}
       className='pet'
       style={{
-        display : 'block',
-        border  : '1px solid',
-        width   : '50%'
+        display: 'block',
+        border: '1px solid',
+        width: '50%'
       }}>
       <div className='image-container'>
         <img src={hero} alt={name} />

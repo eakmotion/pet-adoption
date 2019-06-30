@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
-import pet, { ANIMALS } from '@frontendmasters/pet';
+import React, { useState, useEffect, useContext, FunctionComponent } from 'react';
+import pet, { ANIMALS, Animal } from '@frontendmasters/pet';
 import Results from './Results';
 import useDropdown from './useDropdown';
 import ThemeContext from './ThemeContext';
+import { RouteComponentProps } from '@reach/router';
 
-const SearchParams = () => {
+const SearchParams: FunctionComponent<RouteComponentProps> = () => {
   const [ location, setLocation ] = useState('Bangkok, TH');
-  const [ breeds, setBreeds ] = useState([]);
+  const [ breeds, setBreeds ] = useState([] as string[]);
   const [ animal, AnimalDropdown ] = useDropdown('Animal', 'dog', ANIMALS);
   const [ breed, BreedDropdown, setBreed ] = useDropdown('Breed', '', breeds);
-  const [ pets, setPets ] = useState([]);
+  const [ pets, setPets ] = useState([] as Animal[]);
   const [ theme, setTheme ] = useContext(ThemeContext);
 
   async function requestPets() {
@@ -35,13 +36,6 @@ const SearchParams = () => {
     [ animal, setBreed, setBreeds ]
   );
 
-  const updateTheme = (e) => {
-    setTheme({
-      ...theme,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
     <div className='search-params'>
       <form
@@ -63,17 +57,17 @@ const SearchParams = () => {
         <label htmlFor='location'>
           Theme
           <select
-            value={theme.buttonColor}
+            value={theme}
             name='buttonColor'
-            onChange={updateTheme}
-            onBlur={updateTheme}>
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}>
             <option value='yellow'>Yellow</option>
             <option value='darkblue'>Dark Blue</option>
             <option value='chartreuse'>Chartreuse</option>
             <option value='mediumorchid'>Medium Orchid</option>
           </select>
         </label>
-        <button style={{ backgroundColor: theme.buttonColor, borderColor: theme.borderColor }}>
+        <button style={{ backgroundColor: theme }}>
           Submit
         </button>
       </form>

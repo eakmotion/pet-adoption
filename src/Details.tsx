@@ -1,37 +1,52 @@
 import React, { Component } from 'react';
-import pet from '@frontendmasters/pet';
-import { navigate } from '@reach/router';
+import pet, { Photo } from '@frontendmasters/pet';
+import { navigate, RouteComponentProps } from '@reach/router';
 import Modal from './Modal';
 import Carousel from './Carousel';
 import ErrorBoundary from './ErrorBoundary';
 import ThemeContext from './ThemeContext';
 
-class Details extends Component {
-  state = { loading: true, showModal: false };
+class Details extends Component<RouteComponentProps<{ id: string }>> {
+  public state = {
+    loading: true,
+    showModal: false,
+    name: '',
+    animal: '',
+    location: '',
+    description: '',
+    media: [] as Photo[],
+    url: '',
+    breed: ''
+  };
 
-  componentDidMount() {
+  public componentDidMount() {
+    if (!this.props.id) {
+      navigate('/');
+      return;
+    }
+
     pet
-      .animal(this.props.id)
+      .animal(+this.props.id)
       .then(({ animal }) => {
         this.setState({
-          name        : animal.name,
-          animal      : animal.type,
-          location    : `${animal.contact.address.city}, ${animal.contact.address.state}`,
-          description : animal.description,
-          media       : animal.photos,
-          breed       : animal.breeds.primary,
-          url         : animal.url,
-          loading     : false
+          name: animal.name,
+          animal: animal.type,
+          location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
+          description: animal.description,
+          media: animal.photos,
+          breed: animal.breeds.primary,
+          url: animal.url,
+          loading: false
         });
       })
-      .catch((err) => this.setState({ error: err }));
+      .catch((err: Error) => this.setState({ error: err }));
   }
 
-  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  public toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  adopt = () => navigate(this.state.url);
+  public adopt = () => navigate(this.state.url);
 
-  render() {
+  public render() {
     if (this.state.loading) {
       return <h1>loading...</h1>;
     }
@@ -46,7 +61,7 @@ class Details extends Component {
           <ThemeContext.Consumer>
             {([ theme ]) => (
               <button
-                style={{ backgroundColor: theme.buttonColor, borderColor: theme.borderColor }}
+                style={{ backgroundColor: theme }}
                 onClick={this.toggleModal}>
                 Adopt {name}
               </button>
@@ -68,7 +83,7 @@ class Details extends Component {
   }
 }
 
-export default function DetailsErrorBoundary(props) {
+export default function DetailsErrorBoundary(props: RouteComponentProps<{ id: string }>) {
   return (
     <ErrorBoundary>
       <Details {...props} />
